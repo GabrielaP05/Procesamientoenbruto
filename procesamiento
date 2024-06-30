@@ -1,0 +1,31 @@
+import requests
+
+def descargar_y_guardar_como_csv(url, archivo_salida):
+    """
+    Descarga datos desde una URL y guarda la respuesta como un archivo CSV.
+
+    Args:
+    - url (str): URL desde donde descargar los datos.
+    - archivo_salida (str): Ruta al archivo de salida CSV donde se guardará la respuesta.
+    """
+    try:
+        # Realizar la solicitud GET
+        response = requests.get(url)
+
+        # Verificar el estado de la respuesta
+        if response.status_code == 200:
+            # Guardar la respuesta como un archivo CSV
+            with open(archivo_salida, 'wb') as f:
+                f.write(response.content)
+            print(f"Datos descargados exitosamente y guardados en: {archivo_salida}")
+        else:
+            print(f"Error al descargar los datos. Estado de respuesta: {response.status_code}")
+    except Exception as e:
+        print(f"Error en la solicitud GET: {str(e)}")
+
+# Ejemplo de uso
+url_datos = 'https://huggingface.co/datasets/mstz/heart_failure/raw/main/heart_failure_clinical_records_dataset.csv'  # Reemplaza con la URL real de tus datos
+archivo_salida = 'datos_descargados.csv'
+
+# Llamar a la función para descargar y guardar los datos
+descargar_y_guardar_como_csv(url_datos, archivo_salida)
